@@ -20,7 +20,6 @@ class MainViewController: UIViewController {
     @IBOutlet weak var informLabel: UILabel!
     
     var level: Int!
-    
     var pName: String!
     
     private var player = Player(name: "Player", attempts: [])
@@ -31,31 +30,67 @@ class MainViewController: UIViewController {
     private var score = 0
     private var counter = 0
     
+    private var mistakes: [String] = []
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addButtonOnKeyBoard()
         player.name = pName
-        playerName.text = player.name + " lvl:\(level!)"
+        playerName.text = "lvl:\(level!)"
         newTusk()
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let resultVC = segue.destination as? ResultsViewController else { return }
+        
+        player.score = score
+        player.tasks = counter
+        player.level = level
+        
+        resultVC.player = player
+        resultVC.mistakes = mistakes
+        
+    }
+    
+    private func addButtonOnKeyBoard() {
+        
+        let accessoryView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 44))
+        accessoryView.backgroundColor = UIColor.lightGray
+        
+        let doneButton = UIButton(type: .system)
+        doneButton.setTitle("Done", for: .normal)
+        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        
+        accessoryView.addSubview(doneButton)
+        doneButton.translatesAutoresizingMaskIntoConstraints = false
+        doneButton.trailingAnchor.constraint(equalTo: accessoryView.trailingAnchor, constant: -16).isActive = true
+        doneButton.centerYAnchor.constraint(equalTo: accessoryView.centerYAnchor).isActive = true
+        inputTextField.inputAccessoryView = accessoryView
     }
     
     private func newTusk() {
         
-        level = Int(score / 10)
+        level = level > Int(score / 10) ? level : Int(score / 10)
         
+        if level > 10 {
+            level = 10
+            informView.isHidden = false
+            informLabel.isHidden = false
+            informView.backgroundColor = UIColor(red: 0.01, green: 0.89, blue: 0.01, alpha: 0.5)
+            informLabel.text = "GAME OVER\nCONGRATULATIONS!"
+        }
         
-//        if counter >= 9 {
-//            level += Double(score / counter) > 0.8 ?  1 : -1
-//            if level < 0  { level = 0 }
-//            if level > 10 { level = 10 }
-//        }
-        
-        playerName.text = player.name + " lvl:\(level!)"
+        playerName.text = "lvl:\(level!)"
         
         timerLabel.text = "\(score)/\(counter)"
         counter += 1
         inputTextField.text = ""
+        
         var range = 0...99
+        
         switch level {
         case 0:
             range = 0...10
@@ -133,9 +168,11 @@ class MainViewController: UIViewController {
             showInfoView(isRight: false)
             let attempt = Attempt(counter: counter, time: "", solved: score, level: level)
             player.attempts.append(attempt)
+            mistakes.append("\(firstNum) \(operationLabel.text!) \(secondNum) = \(inputTextField.text!)")
             print("")
             print(player)
             print("")
+            print(mistakes)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.hideInfoView()
             }
@@ -143,9 +180,13 @@ class MainViewController: UIViewController {
         }
     }
     
+    @objc func doneButtonTapped() {
+        checkResult()
+    }
+    
     
     @IBAction func nextButtonTapped(_ sender: Any) {
-        checkResult()
+        
     }
     
     
@@ -155,13 +196,13 @@ extension MainViewController: UITextFieldDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         checkResult()
-        view.endEditing(true)
+        //        view.endEditing(true)
     }
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        textField.resignFirstResponder()
-        return true
-    }
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        
+//        textField.resignFirstResponder()
+//        return true
+//    }
     
     
 }

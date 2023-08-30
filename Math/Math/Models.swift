@@ -15,7 +15,10 @@ struct Attempt {
 }
 
 struct Player {
-    var name: String
-    var attempts: [Attempt]
+    var name: String = "Player"
+    var attempts: [Attempt] = []
+    var score: Int = 0
+    var tasks: Int = 0
+    var level: Int = 0
 }
 

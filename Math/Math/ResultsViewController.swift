@@ -7,7 +7,14 @@
 
 import UIKit
 
+
+// Добавить возможность исправлять ошибки, и играть за другого игрока.
+
 class ResultsViewController: UITableViewController {
+    
+    var player: Player!
+    var mistakes: [String]!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,23 +30,27 @@ class ResultsViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return mistakes.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 
-        // Configure the cell...
+        var content = cell.defaultContentConfiguration()
+        content.text = mistakes[indexPath.row]
+        cell.contentConfiguration = content
 
         return cell
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        "\(player.name), Lvl: \(player.level), Score: \(player.score), Total tasks: \(player.tasks)"
+    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -86,4 +97,40 @@ class ResultsViewController: UITableViewController {
     }
     */
 
+}
+
+extension ResultsViewController {
+    
+    private func showAlertWithTextField(title: String,
+                                        message: String,
+                                        mistake: String) {
+        
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+        
+        alert.addTextField { textField in
+//            textField.placeholder = mistake
+            textField.keyboardType = .decimalPad
+        }
+        
+        let okAction = UIAlertAction(
+            title: "Ok",
+            style: .default) { _ in
+                let text = alert.textFields?.first?.text
+                let targetPoint = mistake.firstIndex(of: "+") ?? mistake.firstIndex(of: "-")
+                let firstNum = mistake.prefix(through: targetPoint ?? String.Index(encodedOffset: 1))
+                let secondNum = mistake.suffix(from: firstNum.count)
+                if text == String("") {
+                    UISelectionFeedbackGenerator().selectionChanged()
+                    self.performSegue(withIdentifier: "aboutUs", sender: nil)
+                } else {
+                    self.showAlert(title: "🚼 🐣 👶 🤭",
+                                   message: "You should call your parents, my little friend!")
+                }
+            }
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+    
 }
