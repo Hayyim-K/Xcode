@@ -60,6 +60,7 @@ class ResultsViewController: UITableViewController {
     
     
     @IBAction func backButtonTapped(_ sender: Any) {
+        completionHandler(player)
         dismiss(animated: true)
     }
 }

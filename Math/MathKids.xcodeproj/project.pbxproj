@@ -22,7 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6F06AB3D2A9B9A770054C2BE /* Math.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Math.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F06AB3D2A9B9A770054C2BE /* MathKids.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MathKids.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F06AB402A9B9A770054C2BE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6F06AB422A9B9A770054C2BE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		6F06AB442A9B9A770054C2BE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -60,7 +60,7 @@
 		6F06AB3E2A9B9A770054C2BE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6F06AB3D2A9B9A770054C2BE /* Math.app */,
+				6F06AB3D2A9B9A770054C2BE /* MathKids.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -88,9 +88,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6F06AB3C2A9B9A770054C2BE /* Math */ = {
+		6F06AB3C2A9B9A770054C2BE /* MathKids */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6F06AB512A9B9A790054C2BE /* Build configuration list for PBXNativeTarget "Math" */;
+			buildConfigurationList = 6F06AB512A9B9A790054C2BE /* Build configuration list for PBXNativeTarget "MathKids" */;
 			buildPhases = (
 				6F06AB392A9B9A770054C2BE /* Sources */,
 				6F06AB3A2A9B9A770054C2BE /* Frameworks */,
@@ -100,9 +100,9 @@
 			);
 			dependencies = (
 			);
-			name = Math;
+			name = MathKids;
 			productName = Math;
-			productReference = 6F06AB3D2A9B9A770054C2BE /* Math.app */;
+			productReference = 6F06AB3D2A9B9A770054C2BE /* MathKids.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -120,7 +120,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 6F06AB382A9B9A770054C2BE /* Build configuration list for PBXProject "Math" */;
+			buildConfigurationList = 6F06AB382A9B9A770054C2BE /* Build configuration list for PBXProject "MathKids" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -133,7 +133,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6F06AB3C2A9B9A770054C2BE /* Math */,
+				6F06AB3C2A9B9A770054C2BE /* MathKids */,
 			);
 		};
 /* End PBXProject section */
@@ -314,7 +314,7 @@
 				DEVELOPMENT_TEAM = BH26MDT64T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Math/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Math Kids";
+				INFOPLIST_KEY_CFBundleDisplayName = "Math Kids Game";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.educational-games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -326,7 +326,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = hayyimsTeam.Math;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -345,7 +345,7 @@
 				DEVELOPMENT_TEAM = BH26MDT64T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Math/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Math Kids";
+				INFOPLIST_KEY_CFBundleDisplayName = "Math Kids Game";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.educational-games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -357,7 +357,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = hayyimsTeam.Math;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -369,7 +369,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6F06AB382A9B9A770054C2BE /* Build configuration list for PBXProject "Math" */ = {
+		6F06AB382A9B9A770054C2BE /* Build configuration list for PBXProject "MathKids" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6F06AB4F2A9B9A790054C2BE /* Debug */,
@@ -378,7 +378,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6F06AB512A9B9A790054C2BE /* Build configuration list for PBXNativeTarget "Math" */ = {
+		6F06AB512A9B9A790054C2BE /* Build configuration list for PBXNativeTarget "MathKids" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6F06AB522A9B9A790054C2BE /* Debug */,
