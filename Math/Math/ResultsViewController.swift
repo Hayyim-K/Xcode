@@ -7,130 +7,107 @@
 
 import UIKit
 
-
-// Добавить возможность исправлять ошибки, и играть за другого игрока.
-
 class ResultsViewController: UITableViewController {
     
-    var player: Player!
-    var mistakes: [String]!
     
-
+    @IBOutlet weak var myNavigationBar: UINavigationBar!
+    
+    var player: Player!
+    var completionHandler: ((Player) ->())!
+    
+    
+    private var isSolved = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        myNavigationBar.topItem?.title = "Mistakes List"
+        
+        presentationController?.delegate = self
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return mistakes.count
+        return player.tasks.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-
+        
         var content = cell.defaultContentConfiguration()
-        content.text = mistakes[indexPath.row]
+        content.text = player.tasks[indexPath.row].getStringTask()
         cell.contentConfiguration = content
-
+        
         return cell
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        "\(player.name), Lvl: \(player.level), Score: \(player.score), Total tasks: \(player.tasks)"
+        "\(player.name), Lvl: \(player.level), Score: \(player.score), Total tasks: \(player.shownTasks)"
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        showAlertWithTextField(
+            title: "Take your time",
+            message: player.tasks[indexPath.row].getStringTask(),
+            index: indexPath
+        )
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    
+    @IBAction func backButtonTapped(_ sender: Any) {
+        dismiss(animated: true)
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension ResultsViewController {
     
     private func showAlertWithTextField(title: String,
                                         message: String,
-                                        mistake: String) {
+                                        index: IndexPath) {
         
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
         
         alert.addTextField { textField in
-//            textField.placeholder = mistake
             textField.keyboardType = .decimalPad
         }
         
         let okAction = UIAlertAction(
             title: "Ok",
             style: .default) { _ in
+                
                 let text = alert.textFields?.first?.text
-                let targetPoint = mistake.firstIndex(of: "+") ?? mistake.firstIndex(of: "-")
-                let firstNum = mistake.prefix(through: targetPoint ?? String.Index(encodedOffset: 1))
-                let secondNum = mistake.suffix(from: firstNum.count)
-                if text == String("") {
+                let result = self.player.tasks[index.row].result()
+                
+                if text == "\(result)" {
                     UISelectionFeedbackGenerator().selectionChanged()
-                    self.performSegue(withIdentifier: "aboutUs", sender: nil)
+                    self.isSolved = true
                 } else {
-                    self.showAlert(title: "🚼 🐣 👶 🤭",
-                                   message: "You should call your parents, my little friend!")
+                    self.isSolved = false
+                }
+                
+                if self.isSolved {
+                    self.player.tasks.remove(at: index.row)
+                    self.tableView.deleteRows(at: [index], with: .right)
+                    self.tableView.reloadData()
+                    self.player.score += 1
+                    self.player.lives += 1
                 }
             }
         alert.addAction(okAction)
         present(alert, animated: true)
     }
     
+}
+
+extension ResultsViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        completionHandler(player)
+    }
 }
