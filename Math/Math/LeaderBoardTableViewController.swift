@@ -105,7 +105,7 @@ class LeaderBoardTableViewController: UITableViewController {
         
         cell.completionHandler = { didDelete in
             if didDelete {
-                self.showAlert(title: "Delete", message: "Are you sure you want to delete this result?", all: false, index: indexPath.row)
+                self.showAlert(title: "Delete", message: "Are you sure you want to delete this result?", all: false, index: indexPath.section)
             }
         }
 

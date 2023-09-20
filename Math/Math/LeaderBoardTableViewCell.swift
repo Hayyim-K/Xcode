@@ -18,6 +18,7 @@ class LeaderBoardTableViewCell: UITableViewCell {
     
     @IBAction func deleteButtonTapped(_ sender: Any) {
         completionHandler(true)
+        
     }
     
 
